@@ -12,6 +12,12 @@
 
 import { showSlide } from '../../blocks/carousel/carousel.js';
 import { moveInstrumentation } from './ue-utils.js';
+import {
+  decorateBlock,
+  decorateButtons,
+  decorateIcons,
+  loadBlock,
+} from '../../scripts/aem.js';
 
 const setupObservers = () => {
   const mutatingBlocks = document.querySelectorAll('div.cards, div.carousel, div.accordion');
@@ -85,6 +91,23 @@ const setupObservers = () => {
   });
 };
 
+const setupContentAddHandler = () => {
+  document.body.addEventListener('aue:content-add', async () => {
+    const main = document.querySelector('main');
+    const newBlocks = [...main.querySelectorAll('.section > div > div:not([data-block-status])')];
+    for (const block of newBlocks) {
+      decorateBlock(block);
+      decorateButtons(block);
+      decorateIcons(block);
+      // eslint-disable-next-line no-await-in-loop
+      await loadBlock(block);
+    }
+    main.querySelectorAll('.section').forEach((section) => {
+      section.style.display = null;
+    });
+  });
+};
+
 const setupUEEventHandlers = () => {
   // For each picture or img element change, update the srcsets of the picture element sources
   document.body.addEventListener('aue:content-patch', ({ detail: { patch, request } }) => {
@@ -147,4 +170,5 @@ const setupUEEventHandlers = () => {
 export default () => {
   setupObservers();
   setupUEEventHandlers();
+  setupContentAddHandler();
 };
