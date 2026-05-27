@@ -11,7 +11,13 @@
           "plugins": {
             "da": {
               "name": "text",
-              "type": "text"
+              "type": "text",
+              "fields": [
+                {
+                  "name": "text",
+                  "selector": "p"
+                }
+              ]
             }
           }
         },

@@ -7,10 +7,28 @@
       "plugins": {
         "da": {
           "name": "text",
-          "type": "text"
+          "type": "text",
+          "fields": [
+            {
+              "name": "text",
+              "selector": "p"
+            }
+          ]
         }
       }
     }
   ],
-  "models": []
+  "models": [
+    {
+      "id": "text",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "text",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ]
 }
