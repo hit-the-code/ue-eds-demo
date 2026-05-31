@@ -11,8 +11,8 @@ function handleEditable(editable) {
     const isEditable = e.target.getAttribute('contenteditable');
     if (isEditable) return;
 
-    // Turn off all other editables
-    const prevEditables = document.body.querySelectorAll('[contenteditable]');
+    // Turn off all other editables (scoped to main to avoid touching UE's own editor)
+    const prevEditables = document.querySelector('main').querySelectorAll('[contenteditable]');
     prevEditables.forEach((prev) => { prev.removeAttribute('contenteditable'); });
 
     // Set the editable attr and set focus
@@ -24,6 +24,7 @@ function handleEditable(editable) {
 // eslint-disable-next-line no-unused-vars
 export default async function init(html) {
   await loadCSS('/styles/context.css');
-  const editables = document.body.querySelectorAll(EDITABLE_SELECTORS);
-  editables.forEach((editable) => { handleEditable(editable); });
+  const main = document.querySelector('main');
+  if (!main) return;
+  main.querySelectorAll(EDITABLE_SELECTORS).forEach((editable) => { handleEditable(editable); });
 }
