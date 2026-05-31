@@ -7,10 +7,15 @@
   grid-template-columns: 1fr;
 }
 
+.teaser-large-image {
+  padding: 1.5rem 0;
+}
+
 .teaser-large-image picture {
   display: block;
   aspect-ratio: 1 / 1;
   overflow: hidden;
+  border-radius: 8px;
 }
 
 .teaser-large-image img {
